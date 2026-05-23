@@ -2,7 +2,7 @@
 
 # SMART FOOD DELIVERY SYSTEM
 
-## Group Members:
+## Group Members
 - Naqiuddin
 - Haris
 - Azrai
