@@ -1,32 +1,4 @@
 package model;
-
-/**
- * =============================================================
- *  Location.java  |  model package
- *  PURPOSE : Represents one node (vertex) in the delivery map graph.
- *
- *  ROLE IN DIJKSTRA:
- *    - Every city junction, restaurant, and customer address
- *      is stored as a Location object.
- *    - During Dijkstra, each Location tracks:
- *        shortestDist  → best known distance from the source
- *        visited       → whether it has been fully processed
- *
- *  GRAPH VISUALISATION:
- *
- *   [Restaurant] ──5km── [JunctionA] ──3km── [Customer]
- *        └──────────9km──── [Mall] ───4km── [JunctionB]
- *                                               │
- *                                             1km
- *                                               │
- *                                          [Customer]
- *
- *  Each box = one Location object.
- *
- *  OOP CONCEPTS USED:
- *    - Encapsulation : private fields, public getters/setters
- * =============================================================
- */
 public class Location {
 
     //instance variables
