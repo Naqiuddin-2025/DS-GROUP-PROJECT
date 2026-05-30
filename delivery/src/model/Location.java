@@ -32,6 +32,7 @@ public class Location {
     //instance variables
     private String  locationId;   
     private String  description;
+    private Location previousLocation;
 
     //used by djikstras
     private double  shortestDist;  // best distance found so far from source
@@ -58,6 +59,9 @@ public class Location {
     public boolean isVisited(){ 
         return visited; 
     }
+    public Location getPreviousLocation() {
+    return previousLocation;
+    }
 
     //setters (used by DeliveryOptimizer during Dijkstra)
     public void setShortestDist(double distance){ 
@@ -66,11 +70,15 @@ public class Location {
     public void setVisited(boolean visited){ 
         this.visited = visited;
     }
+    public void setPreviousLocation(Location previousLocation) {
+    this.previousLocation = previousLocation;
+    }
 
     // reset to its initial location
     public void reset() {
         this.shortestDist = Double.MAX_VALUE;
         this.visited      = false;
+        this.previousLocation = null;
     }
 
     //toString
