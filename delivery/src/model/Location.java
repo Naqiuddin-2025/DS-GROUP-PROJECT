@@ -29,50 +29,53 @@ package model;
  */
 public class Location {
 
-    // ── private fields ───────────────────────────────────────
-    private String  locationId;    // unique key  e.g. "RestaurantA"
-    private String  description;   // display name e.g. "McD Sunway"
+    //instance variables
+    private String  locationId;   
+    private String  description;
 
-    // these two fields are WRITTEN by DeliveryOptimizer during Dijkstra
+    //used by djikstras
     private double  shortestDist;  // best distance found so far from source
     private boolean visited;       // true once this node is fully processed
 
-    // ── Constructor ─────────────────────────────────────────
-    /**
-     * @param locationId  Short unique ID used as the graph's HashMap key
-     * @param description Human-readable name shown in output
-     */
+    //contructors
     public Location(String locationId, String description) {
         this.locationId   = locationId;
         this.description  = description;
-        this.shortestDist = Double.MAX_VALUE; // "infinity" — not yet reached
+        this.shortestDist = Double.MAX_VALUE; //limit unreacheable (represent infinity)
         this.visited      = false;
     }
+    
+    //getters
+    public String  getLocationId(){ 
+        return locationId; 
+    }
+    public String  getDescription(){
+        return description; 
+    }
+    public double  getShortestDist(){
+        return shortestDist;
+    }
+    public boolean isVisited(){ 
+        return visited; 
+    }
 
-    // ── Getters ─────────────────────────────────────────────
-    public String  getLocationId()  { return locationId; }
-    public String  getDescription() { return description; }
-    public double  getShortestDist(){ return shortestDist; }
-    public boolean isVisited()      { return visited; }
+    //setters (used by DeliveryOptimizer during Dijkstra)
+    public void setShortestDist(double distance){ 
+        this.shortestDist = distance;
+    }
+    public void setVisited(boolean visited){ 
+        this.visited = visited;
+    }
 
-    // ── Setters (used by DeliveryOptimizer during Dijkstra) ─
-    public void setShortestDist(double dist) { this.shortestDist = dist; }
-    public void setVisited(boolean visited)  { this.visited      = visited; }
-
-    /** Reset this location back to its initial "unseen" state. */
+    // reset to its initial location
     public void reset() {
         this.shortestDist = Double.MAX_VALUE;
         this.visited      = false;
     }
 
-    // ── toString ────────────────────────────────────────────
+    //toString
     @Override
     public String toString() {
-        String d = (shortestDist == Double.MAX_VALUE)
-                   ? "inf"
-                   : String.format("%.1f km", shortestDist);
-        return String.format("Location[%-12s | %-20s | dist=%-10s | %s]",
-                locationId, description, d,
-                visited ? "visited" : "unvisited");
+        return locationId + " - " + description;
     }
 }
