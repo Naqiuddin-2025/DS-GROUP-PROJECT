@@ -1,0 +1,90 @@
+public class Order {
+    private static class CartNode{
+        OrderItem item;
+        CartNode next;
+        CartNode(OrderItem item){
+            this.item = item;
+        }
+    }
+    private int orderId;
+    private String customerName;
+    private boolean isConfirmed;
+    private CartNode top = null;
+    
+    public Order(int orderId, String customerName){
+        this.orderId = orderId;
+        this.customerName  = customerName;
+        this.isConfirmed = false;
+    }
+    
+    public int getOrderId(){
+        return orderId;
+    }
+    
+    public String getCustomerName(){
+        return customerName;
+    }
+    
+    public boolean isConfirmed(){
+        return isConfirmed;
+    }
+    
+    public void addItem(OrderItem item){
+        if(isConfirmed){
+            System.out.println("Cannot add items. Order is already confirmed.");
+            return;
+        }
+        CartNode newNode =new CartNode(item);
+        newNode.next = top;
+        top = newNode;
+        System.out.println("Added to cart: "+ item.getItemName());
+    }
+    
+    public OrderItem undoLastItem(){
+        if(isConfirmed){
+            System.out.println("Cannot undo. Order is already confirmed.");
+            return null;
+        }
+        if(top==null){
+            System.out.println("Cart is empty. Nothing to undo!");
+            return null;
+        }
+        OrderItem removedItem = top.item;
+        top = top.next;
+        System.out.println("Removed from cart : "+ removedItem.getItemName());
+        return removedItem;
+    }
+    
+    public double calculateTotal(){
+        double total = 0;
+        CartNode current = top;
+        while(current != null){
+            total += current.item.getTotalPrice();
+            current = current.next;
+        }
+        return total;
+    }
+    
+    public boolean confirmOrder(){
+        if(top == null){
+            System.out.println("Cannot confirm an empty cart.");
+            return false;
+        }
+        this.isConfirmed = true;
+        return true;
+    }
+    
+    public void displayOrderDetails(){
+        System.out.println("\n--- Order #"+ orderId +" for "+ customerName +"---");
+        CartNode current = top;
+        if(current == null){
+            System.out.println("Cart is empty");
+        }else{
+            while(current != null){
+                System.out.println(" - "+ current.item);
+                current = current.next;
+            }
+        }
+        System.out.println("Total Bill: RM"+ String.format("%.2f",calculateTotal()));
+    }
+}
