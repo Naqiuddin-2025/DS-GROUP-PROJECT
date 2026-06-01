@@ -1,0 +1,45 @@
+public class OrderProcessing {
+    private static class QueueNode{
+        Order order;
+        QueueNode next;
+        QueueNode(Order order){
+            this.order = order;
+        }
+    }
+    private QueueNode front = null;
+    private QueueNode rear = null;
+    
+    public void receiveOrder(Order order){
+        if(order.confirmOrder()){
+            QueueNode newNode = new QueueNode(order);
+            if(front == null){
+                front = rear = newNode;
+            }else{
+                rear.next = newNode;
+                rear = newNode;
+            }
+            System.out.println("System: Order #"+order.getOrderId()+" sent to the kitchen queue.");
+        }else{
+            System.out.println("System: Failed to queue Order #"+ order.getOrderId());
+        }
+    }
+    
+    public void processNextOrder(){
+        if(front == null){
+            System.out.println("\nNo pending orders in the queue.");
+            return;
+        }
+        Order nextOrder = front.order;
+        front = front.next;
+        
+        if(front == null){
+            rear = null;
+        }
+        
+        System.out.println("\n Preparing Order #"+nextOrder.getOrderId()+ "for"+ nextOrder.getCustomerName()+"...");
+        nextOrder.displayOrderDetails();
+        System.out.println("Order #"+ nextOrder.getOrderId()+ " is ready for delivery! ");
+    }
+    
+    
+}
