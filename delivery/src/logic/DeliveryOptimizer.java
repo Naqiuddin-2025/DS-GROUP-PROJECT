@@ -123,7 +123,7 @@ public class DeliveryOptimizer {
     // Returns shortest distance
     public double findShortestPath(String sourceId,String destinationId) {
         resetLocations();
-        Location source =getLocation(sourceId);
+        Location source = getLocation(sourceId);
         if (source == null) {
             return -1;
         }
@@ -132,13 +132,13 @@ public class DeliveryOptimizer {
 
         while (true) {
 
-            Location current = null;
+            Location current = null;  //the next location Dijkstra wants to process
 
             double smallestDistance = Double.MAX_VALUE;
 
             // Find nearest unvisited node
             for (Location location : locations) {
-                if (!location.isVisited()&&location.getShortestDist()< smallestDistance) {
+                if (!location.isVisited() && location.getShortestDist()< smallestDistance) {
                     smallestDistance = location.getShortestDist();
                     current = location;
                 }
